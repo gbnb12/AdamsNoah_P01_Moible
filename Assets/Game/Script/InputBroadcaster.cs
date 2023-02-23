@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class InputBroadcaster : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public bool IsTapPressed { get; private set; } = false;
+    //TODO add other input events here
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        //Note: Put your Input/Detection here. This code
+        //is just for simple example and does not account
+        //for new Input System setup.
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            IsTapPressed = true; 
+        }
+        else if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            IsTapPressed = false;
+        }
     }
 }

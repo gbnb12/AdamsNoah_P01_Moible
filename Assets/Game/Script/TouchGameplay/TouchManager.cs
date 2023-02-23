@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class TouchManager : MonoBehaviour
 {
+
+    public bool IsTapPressed { get; private set; } = false;
+    //TODO add other input events here
 
     [SerializeField]
     private GameObject player;
@@ -46,6 +50,9 @@ public class TouchManager : MonoBehaviour
             Vector3 position = Camera.main.ScreenToWorldPoint(touchPositionAction.ReadValue<Vector2>());
             position.z = player.transform.position.z;
             player.transform.position = position;
+            IsTapPressed = true;
+            //Debug.Log("You Win!");
+            
         }
     }
 }

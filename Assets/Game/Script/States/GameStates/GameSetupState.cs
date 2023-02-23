@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameSetupState : State
 {
     private GameFSM _stateMachine;
     private GameController _controller;
+
+    [SerializeField] Text _gamestartState;
 
     // this is our constructor, called when this state is created
     public GameSetupState(GameFSM stateMachine, GameController controller)
@@ -19,11 +22,17 @@ public class GameSetupState : State
     {
         base.Enter();
 
+        _controller.GameplayState();
         Debug.Log("STATE: Game Setup");
+        //_gamestartState.GetComponent<Text>().text = "STATE: Game Setup";
+        _controller.LoadSave();
         Debug.Log("Load Save Data");
+        //_gamestartState.GetComponent<Text>().text = "Load Save Data";
+        _controller.SpawnUnits();
         Debug.Log("Spawn Units");
+        //_gamestartState.GetComponent<Text>().text = "Spawn Units";
 
-        _controller.UnitySpawner.Spawn(_controller.PlayerUnitPrefab,
+        _controller.UnitSpawner.Spawn(_controller.PlayerUnitPrefab,
             _controller.PlayerUnitSpawnLocation);
            
     }

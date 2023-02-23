@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GamePlayState : State
 {
@@ -16,9 +18,14 @@ public class GamePlayState : State
     public override void Enter()
     {
         base.Enter();
-
+        //_gameplayState.GetComponent<Text>().text = "STATE: Game Play";
+        _controller.Gameplay();
         Debug.Log("STATE: Game Play");
+        //_gameplayState.GetComponent<Text>().text = "Listen for Player Inputs";
+        _controller.PlayerInputs();
         Debug.Log("Listen for Player Inputs");
+        //_gameplayState.GetComponent<Text>().text = "Display Player HUD";
+        _controller.PlayerHUD();
         Debug.Log("Display Player HUD");
     }
 
@@ -35,7 +42,22 @@ public class GamePlayState : State
     public override void Tick()
     {
         base.Tick();
-        Debug.Log("Checking for Win Condition");
-        Debug.Log("Checking for Lose Condition");
+
+        // check for win condition
+        if(_controller.Touch.IsTapPressed == true)
+        {
+            Debug.Log("You Win!");
+            //_controller.WinFeedback();
+            SceneManager.LoadScene("Win");
+            // Win State, reload level, change back to SetupState, etc.
+        }
+        // check for lose condition
+        else if(StateDuration >= _controller.TapLimitDuration)
+        {
+            Debug.Log("You Lose!");
+            //_controller.LoseFeedback();
+            SceneManager.LoadScene("Lose");
+            // Lose State, reload level, change back to SetupState, etc.
+        }
     }
 }
