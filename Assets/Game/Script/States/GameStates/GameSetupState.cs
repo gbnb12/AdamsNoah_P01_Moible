@@ -32,8 +32,8 @@ public class GameSetupState : State
         Debug.Log("Spawn Units");
         //_gamestartState.GetComponent<Text>().text = "Spawn Units";
 
-        _controller.UnitSpawner.Spawn(_controller.PlayerUnitPrefab,
-            _controller.PlayerUnitSpawnLocation);
+        //_controller.UnitSpawner.Spawn(_controller.PlayerUnitPrefab,
+            //_controller.PlayerUnitSpawnLocation);
            
     }
 

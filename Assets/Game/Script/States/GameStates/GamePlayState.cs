@@ -44,20 +44,26 @@ public class GamePlayState : State
         base.Tick();
 
         // check for win condition
-        if(_controller.Touch.IsTapPressed == true)
-        {
-            Debug.Log("You Win!");
+
+        //if(Player._hitPoints <= 0)
+        //{
+
+        //}
+
+        //if(_controller.Touch.IsTapPressed == true)
+        //{
+            //Debug.Log("You Win!");
             //_controller.WinFeedback();
-            SceneManager.LoadScene("Win");
+            //SceneManager.LoadScene("Win");
             // Win State, reload level, change back to SetupState, etc.
-        }
+        //}
         // check for lose condition
-        else if(StateDuration >= _controller.TapLimitDuration)
-        {
-            Debug.Log("You Lose!");
+        //else if(StateDuration >= _controller.TapLimitDuration)
+        //{
+            //Debug.Log("You Lose!");
             //_controller.LoseFeedback();
-            SceneManager.LoadScene("Lose");
+            //SceneManager.LoadScene("Lose");
             // Lose State, reload level, change back to SetupState, etc.
-        }
+        //}
     }
 }
