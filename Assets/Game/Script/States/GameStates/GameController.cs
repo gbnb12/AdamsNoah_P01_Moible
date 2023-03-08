@@ -9,9 +9,9 @@ public class GameController : MonoBehaviour
     [SerializeField] private float _tapLimitDuration = 2.5f;
 
     [Header("Dependencies")]
-    [SerializeField] private Unit _playerUnitPrefab;
-    [SerializeField] private Transform _playerUnitSpawnLocation;
-    [SerializeField] private UnitSpawner _unitSpawner;
+    //[SerializeField] private Unit _playerUnitPrefab;
+    //[SerializeField] private Transform _playerUnitSpawnLocation;
+    //[SerializeField] private UnitSpawner _unitSpawner;
 
     [SerializeField] private TouchManager _touch;
 
@@ -26,12 +26,70 @@ public class GameController : MonoBehaviour
     [SerializeField] Text _playerInputs;
     [SerializeField] Text _playerHUD;
 
+    [SerializeField] private Transform _minPoint;
+    [SerializeField] private Transform _maxPoint;
+
+    public float _timeCooldown = 0;
+    public float SpawnCooldown = 2;
+
+    [SerializeField] List<GameObject> _spawnList = new List<GameObject>();
+
     public float TapLimitDuration => _tapLimitDuration;
 
-    public Unit PlayerUnitPrefab => _playerUnitPrefab;
-    public Transform PlayerUnitSpawnLocation => _playerUnitSpawnLocation;
-    public UnitSpawner UnitSpawner => _unitSpawner;
+    //public Unit PlayerUnitPrefab => _playerUnitPrefab;
+    //public Transform PlayerUnitSpawnLocation => _playerUnitSpawnLocation;
+    //public UnitSpawner UnitSpawner => _unitSpawner;
     public TouchManager Touch => _touch;
+
+    private void Update()
+    {
+        _timeCooldown += Time.deltaTime;
+        if (_timeCooldown >= SpawnCooldown)
+        {
+            Spawn();
+            _timeCooldown = 0;
+        }
+    }
+
+    public static Vector3 GetRandomSpawnPositionFromLine
+    (Transform startLoc, Transform endLoc)
+    {
+        float randomXPos = UnityEngine.Random.Range
+            (startLoc.position.x, endLoc.position.x);
+        float randomYPos = UnityEngine.Random.Range
+            (startLoc.position.y, endLoc.position.y);
+        float randomZPos = UnityEngine.Random.Range
+            (startLoc.position.z, endLoc.position.z);
+
+        return new Vector3(randomXPos, randomYPos, randomZPos);
+    }
+
+    public static GameObject GetRandomSpawn(List<GameObject> spawnList)
+    {
+        int randomIndex = UnityEngine.Random.Range(0, spawnList.Count);
+        return spawnList[randomIndex];
+    }
+
+    public void Spawn()
+    {
+        if (_minPoint == null || _maxPoint == null) { return; }
+        if (_spawnList.Count == 0 || _spawnList == null) { return; }
+
+        Vector3 randomSpawnPoint =
+            GetRandomSpawnPositionFromLine
+            (_minPoint, _maxPoint);
+        GameObject randomSpawnObject = GetRandomSpawn(_spawnList);
+        Instantiate(randomSpawnObject, randomSpawnPoint, transform.rotation);
+
+        if(SpawnCooldown > .1f)
+        {
+            SpawnCooldown -= .02f;
+        }
+        else
+        {
+            SpawnCooldown = .1f;
+        }
+    }
 
     public void WinFeedback()
     {

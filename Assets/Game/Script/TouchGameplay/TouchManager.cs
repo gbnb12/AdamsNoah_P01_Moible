@@ -18,6 +18,8 @@ public class TouchManager : MonoBehaviour
     private InputAction touchPositionAction;
     private InputAction touchPressAction;
 
+    [SerializeField] protected AudioClip _moveSound;
+
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -51,8 +53,18 @@ public class TouchManager : MonoBehaviour
             position.z = player.transform.position.z;
             player.transform.position = position;
             IsTapPressed = true;
+            MoveFeedback();
             //Debug.Log("You Win!");
-            
+
+        }
+    }
+
+    private void MoveFeedback()
+    {
+        if (_moveSound != null)
+        {
+            AudioHelper.PlayClip2D(_moveSound, 1f);
+
         }
     }
 }
