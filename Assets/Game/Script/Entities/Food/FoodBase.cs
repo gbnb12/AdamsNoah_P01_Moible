@@ -28,6 +28,7 @@ public abstract class FoodBase : MonoBehaviour
     {
         if (other.gameObject.name == "Player")
         {
+            
             Destroy();
         }
     }
