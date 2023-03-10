@@ -41,7 +41,7 @@ public class TouchManager : MonoBehaviour
     {
         Vector3 position = Camera.main.ScreenToWorldPoint(touchPositionAction.ReadValue<Vector2>());
         position.z = player.transform.position.z;
-        player.transform.position = position;
+        player.transform.position = position;                                                                                
     }
 
     private void Update()
@@ -54,8 +54,6 @@ public class TouchManager : MonoBehaviour
             player.transform.position = position;
             IsTapPressed = true;
             MoveFeedback();
-            //Debug.Log("You Win!");
-
         }
     }
 
